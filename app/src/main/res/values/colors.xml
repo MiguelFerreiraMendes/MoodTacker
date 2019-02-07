@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1B00FF</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FF00A1</color>
+    <color name="text_Primary">#000000</color>
+    <color name="background">#FBFBFB</color>
+    <color name="navigation_bar_color">#0017AB</color>
+    <color name="background_sad">#ffde3c50</color>
+    <color name="background_ehhh">#ff9b9b9b</color>
+    <color name="background_ok">#a5468ad9</color>
+    <color name="background_happy">#ffb8e986</color>
+    <color name="background_superHappy">#fff9ec4f</color>
+</resources>

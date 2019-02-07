@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.ViewHistoryActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="7">
+
+     <TextView
+        android:id="@+id/il_y_a_une_semaine"
+        android:maxWidth="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/il_y_a_une_semaine"
+        android:textSize="20sp"
+        android:background="@color/background_superHappy"/>
+
+        <TextView
+            android:id="@+id/il_y_a_six_jours"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/il_y_a_six_jours"
+            android:textSize="20sp"
+            android:background="@color/background_happy"/>
+
+        <TextView
+            android:id="@+id/il_y_a_cinq_jours"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/il_y_a_cinq_jours"
+            android:textSize="20sp"
+            android:background="@color/background_ok"/>
+
+        <TextView
+            android:id="@+id/il_y_a_quatre_jours"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/il_y_a_quatre_jours"
+            android:textSize="20sp"
+            android:background="@color/background_ehhh"/>
+
+        <TextView
+            android:id="@+id/il_y_a_trois_jours"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/il_y_a_trois_jours"
+            android:textSize="20sp"
+            android:background="@color/background_sad"/>
+
+        <TextView
+            android:id="@+id/avant-hier"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/avant_hier"
+            android:textSize="20sp"
+            android:background="@color/background_happy"/>
+
+        <TextView
+            android:id="@+id/hier"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/hier"
+            android:textSize="20sp"
+            android:background="@color/background_ok"/>
+
+
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
