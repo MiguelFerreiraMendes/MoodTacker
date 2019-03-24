@@ -1,5 +1,7 @@
 package com.miguel.moodtracker.controller;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,9 +18,18 @@ import java.util.List;
 class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     List<Mood_history> mmoodlist;
+    Context mContext;
+    SharedPreferences mSharedPreferences;
+    int mwidth;
+    int mheight;
 
-    MoodHistoryAdapter(List<Mood_history> moodlist){
+
+    MoodHistoryAdapter(List<Mood_history> moodlist, Context context){
         mmoodlist = moodlist;
+        mContext = context;
+        mSharedPreferences = mContext.getSharedPreferences("display size", Context.MODE_PRIVATE);
+        mwidth = mSharedPreferences.getInt("width", 0);
+        mheight = mSharedPreferences.getInt("height", 0);
     }
 
     @Override
@@ -31,6 +42,9 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
         myViewHolder.displayColor(mmoodlist.get(position));
+        myViewHolder.displaymoodWidth(mmoodlist.get(position), mwidth);
+        myViewHolder.displaymoodHeight(mmoodlist.get(position), mheight / 4);
+
 
     }
 
@@ -58,8 +72,17 @@ class MyViewHolder extends RecyclerView.ViewHolder {
 
     }
 
+
     void displayColor(Mood_history mood_history){
         mBackgroundColor.setBackgroundColor(mood_history.getmbackgroundColor());
+    }
+
+    void displaymoodWidth(Mood_history mood_history, int x){
+        mBackgroundColor.setMaxWidth(x);
+    }
+
+    void displaymoodHeight(Mood_history mood_history, int x){
+        mBackgroundColor.setMaxHeight(x);
     }
 }
 
