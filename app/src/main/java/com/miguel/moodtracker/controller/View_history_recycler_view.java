@@ -8,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Display;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.miguel.moodtracker.R;
 import com.miguel.moodtracker.model.Mood_history;
@@ -20,11 +22,13 @@ public class View_history_recycler_view extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide(); // hide the title bar
         setContentView(R.layout.activity_view_history_recycler_view);
 
         RecyclerView mRecyclerView;
         List<Mood_history> mmood_list;
         MoodHistoryAdapter monadapteur;
+        LinearLayout mLinearLayout;
         long timestamp = System.currentTimeMillis();
         SharedPreferences mSharedPreferences = this.getSharedPreferences("display size", MODE_PRIVATE);
 
@@ -35,14 +39,22 @@ public class View_history_recycler_view extends AppCompatActivity {
         int height = size.y;
         Log.e("Width", "" + width);
         Log.e("height", "" + height);
+
+
+
         
+
+
+        mLinearLayout = findViewById(R.id.linearlayout_recycleview);
+        mRecyclerView = findViewById(R.id.recyclerView);
+
+       //int width = mLinearLayout.getWidth();
+       //int height = mLinearLayout.getHeight();
+
         mSharedPreferences.edit()
                 .putInt("width", width)
                 .putInt("height", height)
                 .apply();
-
-
-        mRecyclerView = findViewById(R.id.recyclerView);
 
         mmood_list = new ArrayList<>();
         mmood_list.add(new Mood_history("Happy",getResources().getColor(R.color.background_happy), timestamp));
@@ -52,20 +64,7 @@ public class View_history_recycler_view extends AppCompatActivity {
         mmood_list.add(new Mood_history("Ok",getResources().getColor(R.color.background_ok), timestamp));
         mmood_list.add(new Mood_history("Sad",getResources().getColor(R.color.background_sad), timestamp));
         mmood_list.add(new Mood_history("Super Happy",getResources().getColor(R.color.background_superHappy), timestamp));
-        mmood_list.add(new Mood_history("Happy",getResources().getColor(R.color.background_happy), timestamp));
-        mmood_list.add(new Mood_history("Sad",getResources().getColor(R.color.background_sad), timestamp));
-        mmood_list.add(new Mood_history("Super Happy",getResources().getColor(R.color.background_superHappy), timestamp));
-        mmood_list.add(new Mood_history("Ehhh",getResources().getColor(R.color.background_ehhh), timestamp));
-        mmood_list.add(new Mood_history("Ok",getResources().getColor(R.color.background_ok), timestamp));
-        mmood_list.add(new Mood_history("Sad",getResources().getColor(R.color.background_sad), timestamp));
-        mmood_list.add(new Mood_history("Super Happy",getResources().getColor(R.color.background_superHappy), timestamp));
-        mmood_list.add(new Mood_history("Happy",getResources().getColor(R.color.background_happy), timestamp));
-        mmood_list.add(new Mood_history("Sad",getResources().getColor(R.color.background_sad), timestamp));
-        mmood_list.add(new Mood_history("Super Happy",getResources().getColor(R.color.background_superHappy), timestamp));
-        mmood_list.add(new Mood_history("Ehhh",getResources().getColor(R.color.background_ehhh), timestamp));
-        mmood_list.add(new Mood_history("Ok",getResources().getColor(R.color.background_ok), timestamp));
-        mmood_list.add(new Mood_history("Sad",getResources().getColor(R.color.background_sad), timestamp));
-        mmood_list.add(new Mood_history("Super Happy",getResources().getColor(R.color.background_superHappy), timestamp));
+
 
         monadapteur = new MoodHistoryAdapter(mmood_list, this);
 

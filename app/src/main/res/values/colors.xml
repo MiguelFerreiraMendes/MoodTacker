@@ -11,4 +11,5 @@
     <color name="background_ok">#a5468ad9</color>
     <color name="background_happy">#ffb8e986</color>
     <color name="background_superHappy">#fff9ec4f</color>
+    <color name="background_recycleview">#cecece</color>
 </resources>

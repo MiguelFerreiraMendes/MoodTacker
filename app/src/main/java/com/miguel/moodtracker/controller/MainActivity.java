@@ -3,15 +3,19 @@ package com.miguel.moodtracker.controller;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -39,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide(); // hide the title bar
         setContentView(R.layout.activity_main);
-
 
         mWriteCommentaryButton = findViewById(R.id.mood_write_comment);
         mViewHistorybutton = findViewById(R.id.mood_history);
@@ -85,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         String json = gson.toJson(historyList);
 
         Log.i("json", "json apres création" + json);
-
 
 
         mSharedPreferences.edit()

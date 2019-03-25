@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
     SharedPreferences mSharedPreferences;
     int mwidth;
     int mheight;
+    int index = 0;
 
 
     MoodHistoryAdapter(List<Mood_history> moodlist, Context context){
@@ -43,7 +45,9 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
         myViewHolder.displayColor(mmoodlist.get(position));
         myViewHolder.displaymoodWidth(mmoodlist.get(position), mwidth);
-        myViewHolder.displaymoodHeight(mmoodlist.get(position), mheight / 4);
+        myViewHolder.displaymoodHeight(mheight / 7);
+        myViewHolder.displayText(index);
+        index++;
 
 
     }
@@ -77,12 +81,63 @@ class MyViewHolder extends RecyclerView.ViewHolder {
         mBackgroundColor.setBackgroundColor(mood_history.getmbackgroundColor());
     }
 
-    void displaymoodWidth(Mood_history mood_history, int x){
-        mBackgroundColor.setMaxWidth(x);
+    void displaymoodWidth(Mood_history mood_history, int width){
+        int color = mood_history.getmbackgroundColor();
+        Log.i("color", "couleur dans la fonction" + color);
+        switch (color)
+        {
+            case -398257:
+                mBackgroundColor.setMaxWidth(width);
+                break;
+            case -4658810:
+                mBackgroundColor.setMaxWidth((width / 100)* 80);
+                break;
+            case -1522103591:
+                mBackgroundColor.setMaxWidth((width / 100)* 60);
+                break;
+            case -6579301:
+                mBackgroundColor.setMaxWidth((width / 100)* 40);
+                break;
+            case -2212784:
+                mBackgroundColor.setMaxWidth((width / 100)* 20);
+                break;
+            default:
+                mBackgroundColor.setMaxWidth(width);
+        }
     }
 
-    void displaymoodHeight(Mood_history mood_history, int x){
-        mBackgroundColor.setMaxHeight(x);
+    void displaymoodHeight(int x){
+        mBackgroundColor.setMinHeight(x);
+    }
+
+    void displayText(int index){
+        switch (index)
+        {
+            case 0:
+                mXjours.setText("Il y a une semaine");
+                break;
+            case 1:
+                mXjours.setText("Il y a six jours");
+                break;
+            case 2:
+                mXjours.setText("Il y a cinq jours");
+                break;
+            case 3:
+                mXjours.setText("Il y a quatre jours");
+                break;
+            case 4:
+                mXjours.setText("Il y a trois jours");
+                break;
+            case 5:
+                mXjours.setText("Avant-hier");
+                break;
+            case 6:
+                mXjours.setText("Hier");
+                break;
+            default:
+                mXjours.setText("Fail");
+        }
+
     }
 }
 
