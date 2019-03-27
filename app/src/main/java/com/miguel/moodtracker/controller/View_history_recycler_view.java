@@ -31,6 +31,8 @@ public class View_history_recycler_view extends AppCompatActivity {
         LinearLayout mLinearLayout;
         long timestamp = System.currentTimeMillis();
         SharedPreferences mSharedPreferences = this.getSharedPreferences("display size", MODE_PRIVATE);
+        int ressourceID = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int barheight = getResources().getDimensionPixelSize(ressourceID);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -42,18 +44,17 @@ public class View_history_recycler_view extends AppCompatActivity {
 
 
 
-        
-
 
         mLinearLayout = findViewById(R.id.linearlayout_recycleview);
         mRecyclerView = findViewById(R.id.recyclerView);
 
        //int width = mLinearLayout.getWidth();
        //int height = mLinearLayout.getHeight();
+        int screenHeight = height - barheight;
 
         mSharedPreferences.edit()
                 .putInt("width", width)
-                .putInt("height", height)
+                .putInt("height", screenHeight)
                 .apply();
 
         mmood_list = new ArrayList<>();

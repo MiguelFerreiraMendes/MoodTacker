@@ -18,12 +18,12 @@ import java.util.List;
 
 class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-    List<Mood_history> mmoodlist;
-    Context mContext;
-    SharedPreferences mSharedPreferences;
-    int mwidth;
-    int mheight;
-    int index = 0;
+    private List<Mood_history> mmoodlist;
+    private Context mContext;
+    private SharedPreferences mSharedPreferences;
+    private int mwidth;
+    private int mheight;
+    private int index = 0;
 
 
     MoodHistoryAdapter(List<Mood_history> moodlist, Context context){
@@ -45,7 +45,7 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
         myViewHolder.displayColor(mmoodlist.get(position));
         myViewHolder.displaymoodWidth(mmoodlist.get(position), mwidth);
-        myViewHolder.displaymoodHeight(mheight / 7);
+        myViewHolder.displaymoodHeight(mheight /7);
         myViewHolder.displayText(index);
         index++;
 
@@ -90,16 +90,16 @@ class MyViewHolder extends RecyclerView.ViewHolder {
                 mBackgroundColor.setMaxWidth(width);
                 break;
             case -4658810:
-                mBackgroundColor.setMaxWidth((width / 100)* 80);
+                mBackgroundColor.setMaxWidth((width / 100)* 90);
                 break;
             case -1522103591:
-                mBackgroundColor.setMaxWidth((width / 100)* 60);
+                mBackgroundColor.setMaxWidth((width / 100)* 75);
                 break;
             case -6579301:
-                mBackgroundColor.setMaxWidth((width / 100)* 40);
+                mBackgroundColor.setMaxWidth((width / 100)* 50);
                 break;
             case -2212784:
-                mBackgroundColor.setMaxWidth((width / 100)* 20);
+                mBackgroundColor.setMaxWidth((width / 100)* 35);
                 break;
             default:
                 mBackgroundColor.setMaxWidth(width);
@@ -139,5 +139,6 @@ class MyViewHolder extends RecyclerView.ViewHolder {
         }
 
     }
+
 }
 
