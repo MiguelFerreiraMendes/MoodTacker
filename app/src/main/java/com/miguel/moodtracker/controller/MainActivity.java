@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
@@ -54,8 +55,18 @@ public class MainActivity extends AppCompatActivity {
         long timestamp = System.currentTimeMillis();
         Log.d("MainActivity", "Current Timestamp: " + timestamp);
 
+        final MediaPlayer superHappyNote = MediaPlayer.create(this, R.raw.superhappy);
+        final MediaPlayer happyNote = MediaPlayer.create(this, R.raw.happy);
+        final MediaPlayer okNote = MediaPlayer.create(this, R.raw.ok);
+        final MediaPlayer ehhhNote = MediaPlayer.create(this, R.raw.ehhh);
+        final MediaPlayer sadNote = MediaPlayer.create(this, R.raw.sad);
 
-
+        final List <MediaPlayer> MediaplayerList = new ArrayList<>();
+        MediaplayerList.add(0, sadNote);
+        MediaplayerList.add(1, ehhhNote);
+        MediaplayerList.add(2, okNote);
+        MediaplayerList.add(3, happyNote);
+        MediaplayerList.add(4, superHappyNote);
 
 
         Mood_Display display_Super_Happy = new Mood_Display(R.drawable.smiley_super_happy, R.color.background_superHappy);
@@ -105,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        CustomGestureDetector customGestureDetector = new CustomGestureDetector(MoodDisplayList, mLayout, mSmileyOfTheMood, this);
+        CustomGestureDetector customGestureDetector = new CustomGestureDetector(MoodDisplayList, mLayout, mSmileyOfTheMood, this, MediaplayerList);
         mGestureDetector = new GestureDetector(this, customGestureDetector);
         mGestureDetector.setOnDoubleTapListener(customGestureDetector);
         mWriteCommentaryButton.setOnClickListener(new View.OnClickListener() {

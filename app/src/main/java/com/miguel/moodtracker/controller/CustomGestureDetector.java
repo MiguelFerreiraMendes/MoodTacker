@@ -2,6 +2,7 @@ package com.miguel.moodtracker.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -16,6 +17,8 @@ public class CustomGestureDetector implements GestureDetector.OnGestureListener,
         GestureDetector.OnDoubleTapListener {
 
     private List<Mood_Display> mmoodList;
+    private List<MediaPlayer> mMediaPlayerList;
+    private MediaPlayer mcurrentNote;
     private ConstraintLayout mlayout;
     private ImageView msmileyOfTheMood;
     private Context mContext;
@@ -23,8 +26,9 @@ public class CustomGestureDetector implements GestureDetector.OnGestureListener,
     private int index;
 
 
-    protected CustomGestureDetector(List<Mood_Display> moodDisplayList, ConstraintLayout layout, ImageView smileyOfTheMood, Context context) {
+    protected CustomGestureDetector(List<Mood_Display> moodDisplayList, ConstraintLayout layout, ImageView smileyOfTheMood, Context context, List<MediaPlayer> mediaPlayerlist) {
         mmoodList = moodDisplayList;
+        mMediaPlayerList = mediaPlayerlist;
         mlayout = layout;
         msmileyOfTheMood = smileyOfTheMood;
         mContext = context;
@@ -50,6 +54,8 @@ public class CustomGestureDetector implements GestureDetector.OnGestureListener,
             if (e1.getY() < e2.getY()) {
                 mlayout.setBackgroundColor(findResourceColor(index + 1));
                 msmileyOfTheMood.setImageResource(mmoodList.get(index + 1).getsmiley());
+                mcurrentNote = mMediaPlayerList.get(index + 1);
+                mcurrentNote.start();
                 mSharedPreferences.edit()
                         .putInt("moodindex", index + 1)
                         .apply();
@@ -62,6 +68,8 @@ public class CustomGestureDetector implements GestureDetector.OnGestureListener,
             if (e1.getY() > e2.getY()) {
                 mlayout.setBackgroundColor(findResourceColor(index - 1));
                 msmileyOfTheMood.setImageResource(mmoodList.get(index - 1).getsmiley());
+                mcurrentNote = mMediaPlayerList.get(index - 1);
+                mcurrentNote.start();
                 mSharedPreferences.edit()
                         .putInt("moodindex", index - 1)
                         .apply();
