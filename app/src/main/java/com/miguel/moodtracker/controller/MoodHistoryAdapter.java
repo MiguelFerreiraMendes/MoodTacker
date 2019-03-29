@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miguel.moodtracker.R;
 import com.miguel.moodtracker.model.Mood_history;
@@ -47,6 +48,7 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
         myViewHolder.displaymoodWidth(mmoodlist.get(position), mwidth);
         myViewHolder.displaymoodHeight(mheight /7);
         myViewHolder.displayText(index);
+        myViewHolder.displayCommentButton(mmoodlist.get(position), mContext);
         index++;
 
 
@@ -79,6 +81,22 @@ class MyViewHolder extends RecyclerView.ViewHolder {
 
     void displayColor(Mood_history mood_history){
         mBackgroundColor.setBackgroundColor(mood_history.getmbackgroundColor());
+    }
+
+    void displayCommentButton(Mood_history mood_history, final Context context){
+        final String comment = mood_history.getmcomment();
+        if (!comment.equals("")){
+            mCommentButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, comment, Toast.LENGTH_LONG).show();
+                }
+
+            });
+        }else{
+            mCommentButton.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     void displaymoodWidth(Mood_history mood_history, int width){

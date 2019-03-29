@@ -58,13 +58,13 @@ public class View_history_recycler_view extends AppCompatActivity {
                 .apply();
 
         mmood_list = new ArrayList<>();
-        mmood_list.add(new Mood_history("Happy",getResources().getColor(R.color.background_happy), timestamp));
-        mmood_list.add(new Mood_history("Sad",getResources().getColor(R.color.background_sad), timestamp));
+        mmood_list.add(new Mood_history("J'ai vu un oiseau",getResources().getColor(R.color.background_happy), timestamp));
+        mmood_list.add(new Mood_history("J'ai manger du caca",getResources().getColor(R.color.background_sad), timestamp));
         mmood_list.add(new Mood_history("Super Happy",getResources().getColor(R.color.background_superHappy), timestamp));
-        mmood_list.add(new Mood_history("Ehhh",getResources().getColor(R.color.background_ehhh), timestamp));
-        mmood_list.add(new Mood_history("Ok",getResources().getColor(R.color.background_ok), timestamp));
-        mmood_list.add(new Mood_history("Sad",getResources().getColor(R.color.background_sad), timestamp));
-        mmood_list.add(new Mood_history("Super Happy",getResources().getColor(R.color.background_superHappy), timestamp));
+        mmood_list.add(new Mood_history("J'ai mal au ventre",getResources().getColor(R.color.background_ehhh), timestamp));
+        mmood_list.add(new Mood_history("",getResources().getColor(R.color.background_ok), timestamp));
+        mmood_list.add(new Mood_history("J'ai trop d'erreurs dans mon code",getResources().getColor(R.color.background_sad), timestamp));
+        mmood_list.add(new Mood_history("J'ai manger un kebab",getResources().getColor(R.color.background_superHappy), timestamp));
 
 
         monadapteur = new MoodHistoryAdapter(mmood_list, this);
