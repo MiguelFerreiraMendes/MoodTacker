@@ -11,8 +11,13 @@ import android.view.Display;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.miguel.moodtracker.R;
 import com.miguel.moodtracker.model.Mood_history;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +33,15 @@ public class View_history_recycler_view extends AppCompatActivity {
         RecyclerView mRecyclerView;
         List<Mood_history> mmood_list;
         MoodHistoryAdapter monadapteur;
-        LinearLayout mLinearLayout;
+        SharedPreferences mPrefs = getSharedPreferences("mood_of_the_day", MODE_PRIVATE);
         long timestamp = System.currentTimeMillis();
-        SharedPreferences mSharedPreferences = this.getSharedPreferences("display size", MODE_PRIVATE);
+        SharedPreferences mSharedPreferencesDisplay = this.getSharedPreferences("display size", MODE_PRIVATE);
+       // SharedPreferences mSharedPreferencesMood = getSharedPreferences("json", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mPrefs.getString("json", "");
+        JsonArray jsonArray = gson.fromJson(json, JsonArray.class);
+        Log.i("json", "récup du json dans la class history recycle" + jsonArray);
+
         int ressourceID = getResources().getIdentifier("status_bar_height", "dimen", "android");
         int barheight = getResources().getDimensionPixelSize(ressourceID);
 
@@ -45,17 +56,17 @@ public class View_history_recycler_view extends AppCompatActivity {
 
 
 
-        mLinearLayout = findViewById(R.id.linearlayout_recycleview);
         mRecyclerView = findViewById(R.id.recyclerView);
 
        //int width = mLinearLayout.getWidth();
        //int height = mLinearLayout.getHeight();
         int screenHeight = height - barheight;
 
-        mSharedPreferences.edit()
+        mSharedPreferencesDisplay.edit()
                 .putInt("width", width)
                 .putInt("height", screenHeight)
                 .apply();
+
 
         mmood_list = new ArrayList<>();
         mmood_list.add(new Mood_history("J'ai vu un oiseau",getResources().getColor(R.color.background_happy), timestamp));
