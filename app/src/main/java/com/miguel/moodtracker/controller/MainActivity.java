@@ -3,7 +3,6 @@ package com.miguel.moodtracker.controller;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -11,12 +10,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,6 +24,7 @@ import com.miguel.moodtracker.model.Mood_history;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide(); // hide the title bar
+        Objects.requireNonNull(getSupportActionBar()).hide(); // hide the title bar
         setContentView(R.layout.activity_main);
 
         mWriteCommentaryButton = findViewById(R.id.mood_write_comment);
@@ -88,16 +85,18 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("swipe", "index dans le main, initialisation" + mSharedPreferences.getInt("moodindex", 0));
 
+
         Gson gson = new Gson();
-        List<Mood_history> historyList = new ArrayList<>();
-        historyList.add(new Mood_history("blabla 1", R.color.background_happy, timestamp));
-        historyList.add(new Mood_history("blabla 2", R.color.background_sad, timestamp));
-        historyList.add(new Mood_history("blabla 3", R.color.background_ehhh, timestamp));
-        historyList.add(new Mood_history("blabla 4", R.color.background_superHappy, timestamp));
-        historyList.add(new Mood_history("blabla 5", R.color.background_ok, timestamp));
-        historyList.add(new Mood_history("blabla 6", R.color.background_sad, timestamp));
-        historyList.add(new Mood_history("blabla 7", R.color.background_superHappy, timestamp));
+        Mood_history[] historyList = new Mood_history[7];
+        historyList[0]= (new Mood_history("blabla 1", R.color.background_happy));
+        historyList[1]= (new Mood_history("blabla 2", R.color.background_sad));
+        historyList[2]= (new Mood_history("blabla 3", R.color.background_ehhh));
+        historyList[3]= (new Mood_history("blabla 4", R.color.background_superHappy));
+        historyList[4]= (new Mood_history("blabla 5", R.color.background_ok));
+        historyList[5]= (new Mood_history("blabla 6", R.color.background_sad));
+        historyList[6]= (new Mood_history("blabla 7", R.color.background_superHappy));
         String json = gson.toJson(historyList);
+
 
         Log.i("json", "json apres création" + json);
 
@@ -107,9 +106,9 @@ public class MainActivity extends AppCompatActivity {
                 .putInt("backgroundcolor", MoodDisplayList.get(mSharedPreferences.getInt("moodindex", 3)).getbackgroundColor())
                 .putInt("moodindex", 3)
                 .putLong("timestamp", timestamp)
-                .putString("json", historyList.toString())
+                .putString("json", json)
                 .apply();
-
+        Log.i("index", ""+mSharedPreferences.getInt("moodindex", 0));
         Log.i("json", "json des shared pref" + mSharedPreferences.getString("json", ""));
 
 

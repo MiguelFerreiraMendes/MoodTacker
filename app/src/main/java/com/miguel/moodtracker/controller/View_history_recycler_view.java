@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.miguel.moodtracker.R;
 import com.miguel.moodtracker.model.Mood_history;
 
@@ -34,13 +35,10 @@ public class View_history_recycler_view extends AppCompatActivity {
         List<Mood_history> mmood_list;
         MoodHistoryAdapter monadapteur;
         SharedPreferences mPrefs = getSharedPreferences("mood_of_the_day", MODE_PRIVATE);
-        long timestamp = System.currentTimeMillis();
         SharedPreferences mSharedPreferencesDisplay = this.getSharedPreferences("display size", MODE_PRIVATE);
-       // SharedPreferences mSharedPreferencesMood = getSharedPreferences("json", MODE_PRIVATE);
-        Gson gson = new Gson();
+
         String json = mPrefs.getString("json", "");
-        JsonArray jsonArray = gson.fromJson(json, JsonArray.class);
-        Log.i("json", "récup du json dans la class history recycle" + jsonArray);
+        Log.i("json", ""+ json);
 
         int ressourceID = getResources().getIdentifier("status_bar_height", "dimen", "android");
         int barheight = getResources().getDimensionPixelSize(ressourceID);
@@ -69,13 +67,13 @@ public class View_history_recycler_view extends AppCompatActivity {
 
 
         mmood_list = new ArrayList<>();
-        mmood_list.add(new Mood_history("J'ai vu un oiseau",getResources().getColor(R.color.background_happy), timestamp));
-        mmood_list.add(new Mood_history("J'ai manger du caca",getResources().getColor(R.color.background_sad), timestamp));
-        mmood_list.add(new Mood_history("Super Happy",getResources().getColor(R.color.background_superHappy), timestamp));
-        mmood_list.add(new Mood_history("J'ai mal au ventre",getResources().getColor(R.color.background_ehhh), timestamp));
-        mmood_list.add(new Mood_history("",getResources().getColor(R.color.background_ok), timestamp));
-        mmood_list.add(new Mood_history("J'ai trop d'erreurs dans mon code",getResources().getColor(R.color.background_sad), timestamp));
-        mmood_list.add(new Mood_history("J'ai manger un kebab",getResources().getColor(R.color.background_superHappy), timestamp));
+        mmood_list.add(new Mood_history("J'ai vu un oiseau",getResources().getColor(R.color.background_happy)));
+        mmood_list.add(new Mood_history("J'ai manger du caca",getResources().getColor(R.color.background_sad)));
+        mmood_list.add(new Mood_history("Super Happy",getResources().getColor(R.color.background_superHappy)));
+        mmood_list.add(new Mood_history("J'ai mal au ventre",getResources().getColor(R.color.background_ehhh)));
+        mmood_list.add(new Mood_history("",getResources().getColor(R.color.background_ok)));
+        mmood_list.add(new Mood_history("J'ai trop d'erreurs dans mon code",getResources().getColor(R.color.background_sad)));
+        mmood_list.add(new Mood_history("J'ai manger un kebab",getResources().getColor(R.color.background_superHappy)));
 
 
         monadapteur = new MoodHistoryAdapter(mmood_list, this);

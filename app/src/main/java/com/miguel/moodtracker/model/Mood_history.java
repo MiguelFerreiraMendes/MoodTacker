@@ -4,18 +4,13 @@ public class Mood_history {
 
     private String mcomment;
     private int mbackgroundColor;
-    private Long mdate;
 
 
-    public Mood_history(String comment, int backgroundColor, Long date) {
+    public Mood_history(String comment, int backgroundColor) {
 
         mcomment = comment;
         mbackgroundColor = backgroundColor;
-        mdate = date;
-    }
 
-    public Long getMdate() {
-        return mdate;
     }
 
     public String getmcomment() {
