@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.miguel.moodtracker.R;
 import com.miguel.moodtracker.model.Mood_history;
 
@@ -21,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class View_history_recycler_view extends AppCompatActivity {
@@ -37,8 +39,27 @@ public class View_history_recycler_view extends AppCompatActivity {
         SharedPreferences mPrefs = getSharedPreferences("mood_of_the_day", MODE_PRIVATE);
         SharedPreferences mSharedPreferencesDisplay = this.getSharedPreferences("display size", MODE_PRIVATE);
 
+        Gson gson = new Gson();
+
+
         String json = mPrefs.getString("json", "");
-        Log.i("json", ""+ json);
+        Log.i("json", "Json quand on le récup dans l'activité de l'historique"+ json);
+        Mood_history[] moodTable = gson.fromJson(json, Mood_history[].class);
+        Log.i("json", "Json quand on le remet au format de tableau" + Arrays.toString(moodTable));
+        Mood_history mood1 = moodTable[0];
+        Mood_history mood2 = moodTable[1];
+        Mood_history mood3 = moodTable[2];
+        Mood_history mood4 = moodTable[3];
+        Mood_history mood5 = moodTable[4];
+        Mood_history mood6 = moodTable[5];
+        Mood_history mood7 = moodTable[6];
+
+
+        Log.i("json", "premier élément quand on le récup" + mood1);
+
+
+
+
 
         int ressourceID = getResources().getIdentifier("status_bar_height", "dimen", "android");
         int barheight = getResources().getDimensionPixelSize(ressourceID);
@@ -76,7 +97,7 @@ public class View_history_recycler_view extends AppCompatActivity {
         mmood_list.add(new Mood_history("J'ai manger un kebab",getResources().getColor(R.color.background_superHappy)));
 
 
-        monadapteur = new MoodHistoryAdapter(mmood_list, this);
+        monadapteur = new MoodHistoryAdapter(moodTable, this);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(monadapteur);
