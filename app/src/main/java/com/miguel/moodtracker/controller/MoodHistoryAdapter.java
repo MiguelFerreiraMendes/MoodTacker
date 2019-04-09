@@ -15,17 +15,19 @@ import android.widget.Toast;
 import com.miguel.moodtracker.R;
 import com.miguel.moodtracker.model.Mood_history;
 
+import java.util.List;
+
 class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-    private Mood_history[] mmoodlist;
+    private List<Mood_history> mmoodlist;
     private Context mContext;
     private SharedPreferences mSharedPreferences;
     private int mwidth;
     private int mheight;
-    private int index = 6;
+    private int index = 0;
 
 
-    MoodHistoryAdapter(Mood_history[] moodlist, Context context){
+    MoodHistoryAdapter(List<Mood_history> moodlist, Context context){
         mmoodlist = moodlist;
         mContext = context;
         mSharedPreferences = mContext.getSharedPreferences("display size", Context.MODE_PRIVATE);
@@ -42,12 +44,14 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
-        myViewHolder.displayColor(mmoodlist , position , mContext);
-        myViewHolder.displaymoodWidth(mmoodlist, mwidth, position, mContext);
+
+        myViewHolder.displayColor(mmoodlist.get(position), mContext);
+        myViewHolder.displaymoodWidth(mmoodlist.get(position), mwidth, mContext);
         myViewHolder.displaymoodHeight(mheight /7);
         myViewHolder.displayText(index);
-        myViewHolder.displayCommentButton(mmoodlist[position], mContext);
-        index--;
+        myViewHolder.displayCommentButton(mmoodlist.get(position), mContext);
+        index++;
+
 
 
     }
@@ -55,7 +59,7 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
      public int getItemCount() {
-         return mmoodlist.length;
+         return mmoodlist.size();
      }
 }
 
@@ -77,10 +81,9 @@ class MyViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    void displayColor(Mood_history[] mood_history, int position , Context mContext){
-        mBackgroundColor.setBackgroundColor(mContext.getResources().getColor(mood_history[position].getmbackgroundColor()));
+    void displayColor(Mood_history mood_history, Context context){
+        mBackgroundColor.setBackgroundColor(context.getResources().getColor(mood_history.getmbackgroundColor()));
 
-        Log.i("color", "color displayed"+ mood_history[position].getmbackgroundColor());
     }
 
     void displayCommentButton(Mood_history mood_history, final Context context){
@@ -99,8 +102,8 @@ class MyViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    void displaymoodWidth(Mood_history[] mood_history, int width, int position, Context mContext){
-        int color = mContext.getResources().getColor(mood_history[position].getmbackgroundColor());
+    void displaymoodWidth(Mood_history mood_history, int width, Context context){
+        int color = (context.getResources().getColor(mood_history.getmbackgroundColor()));
         Log.i("color", "couleur dans la fonction" + color);
         switch (color)
         {
