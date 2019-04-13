@@ -24,7 +24,8 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private SharedPreferences mSharedPreferences;
     private int mwidth;
     private int mheight;
-    private int index = 0;
+    private int index;
+
 
 
     MoodHistoryAdapter(List<Mood_history> moodlist, Context context){
@@ -33,6 +34,8 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
         mSharedPreferences = mContext.getSharedPreferences("display size", Context.MODE_PRIVATE);
         mwidth = mSharedPreferences.getInt("width", 0);
         mheight = mSharedPreferences.getInt("height", 0);
+        index = moodlist.size();
+
     }
 
     @Override
@@ -50,7 +53,7 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
         myViewHolder.displaymoodHeight(mheight /7);
         myViewHolder.displayText(index);
         myViewHolder.displayCommentButton(mmoodlist.get(position), mContext);
-        index++;
+        index--;
 
 
 
@@ -134,25 +137,25 @@ class MyViewHolder extends RecyclerView.ViewHolder {
     void displayText(int index){
         switch (index)
         {
-            case 6:
+            case 7:
                 mXjours.setText("Il y a une semaine");
                 break;
-            case 5:
+            case 6:
                 mXjours.setText("Il y a six jours");
                 break;
-            case 4:
+            case 5:
                 mXjours.setText("Il y a cinq jours");
                 break;
-            case 3:
+            case 4:
                 mXjours.setText("Il y a quatre jours");
                 break;
-            case 2:
+            case 3:
                 mXjours.setText("Il y a trois jours");
                 break;
-            case 1:
+            case 2:
                 mXjours.setText("Avant-hier");
                 break;
-            case 0:
+            case 1:
                 mXjours.setText("Hier");
                 break;
             default:

@@ -1,5 +1,8 @@
 package com.miguel.moodtracker.controller;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +26,7 @@ import com.miguel.moodtracker.model.Mood_Display;
 import com.miguel.moodtracker.model.Mood_history;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
     protected ImageButton mWriteCommentaryButton;
     protected ImageButton mViewHistorybutton;
     protected ImageView mSmileyOfTheMood;
+    protected ImageButton mAlarmTest;
     public ConstraintLayout mLayout;
     protected GestureDetector mGestureDetector;
     private String m_commentary;
     SharedPreferences mSharedPreferences;
-
 
 
     @Override
@@ -48,17 +52,18 @@ public class MainActivity extends AppCompatActivity {
         mViewHistorybutton = findViewById(R.id.mood_history);
         mSmileyOfTheMood = findViewById(R.id.smiley_of_the_mood);
         mLayout = findViewById(R.id.gestureDetector);
+        mAlarmTest = findViewById(R.id.alarmtest);
         mSharedPreferences = this.getSharedPreferences("mood_of_the_day", MODE_PRIVATE);
         long timestamp = System.currentTimeMillis();
         Log.d("MainActivity", "Current Timestamp: " + timestamp);
 
-        final MediaPlayer superHappyNote = MediaPlayer.create(this, R.raw.superhappy);
-        final MediaPlayer happyNote = MediaPlayer.create(this, R.raw.happy);
-        final MediaPlayer okNote = MediaPlayer.create(this, R.raw.ok);
-        final MediaPlayer ehhhNote = MediaPlayer.create(this, R.raw.ehhh);
-        final MediaPlayer sadNote = MediaPlayer.create(this, R.raw.sad);
+        MediaPlayer superHappyNote = MediaPlayer.create(this, R.raw.superhappy);
+        MediaPlayer happyNote = MediaPlayer.create(this, R.raw.happy);
+        MediaPlayer okNote = MediaPlayer.create(this, R.raw.ok);
+        MediaPlayer ehhhNote = MediaPlayer.create(this, R.raw.ehhh);
+        MediaPlayer sadNote = MediaPlayer.create(this, R.raw.sad);
 
-        final List <MediaPlayer> MediaplayerList = new ArrayList<>();
+        List <MediaPlayer> MediaplayerList = new ArrayList<>();
         MediaplayerList.add(0, sadNote);
         MediaplayerList.add(1, ehhhNote);
         MediaplayerList.add(2, okNote);
@@ -78,38 +83,51 @@ public class MainActivity extends AppCompatActivity {
         MoodDisplayList.add(0, display_Sad);
         MoodDisplayList.add(1, display_Ehh);
         MoodDisplayList.add(2, display_Normal);
-        MoodDisplayList.add(3,display_Happy);
-        MoodDisplayList.add(4,display_Super_Happy);
+        MoodDisplayList.add(3, display_Happy);
+        MoodDisplayList.add(4, display_Super_Happy);
 
 
 
         Log.i("swipe", "index dans le main, initialisation" + mSharedPreferences.getInt("moodindex", 0));
 
 
+
+
+
         Gson gson = new Gson();
-        Mood_history[] historyList = new Mood_history[7];
-        historyList[0]= (new Mood_history("blabla 1", R.color.background_happy));
-        historyList[1]= (new Mood_history("blabla 2", R.color.background_sad));
-        historyList[2]= (new Mood_history("blabla 3", R.color.background_ehhh));
-        historyList[3]= (new Mood_history("blabla 4", R.color.background_superHappy));
-        historyList[4]= (new Mood_history("blabla 5", R.color.background_ok));
-        historyList[5]= (new Mood_history("blabla 6", R.color.background_sad));
-        historyList[6]= (new Mood_history("blabla 7", R.color.background_superHappy));
+        final ArrayList<Mood_history> historyList = new ArrayList<>();
+
+
         String json = gson.toJson(historyList);
 
 
         Log.i("json", "json apres création" + json);
 
+        if (mSharedPreferences.getInt("moodindex", 0) != 3){
+            int index = mSharedPreferences.getInt("moodindex", 3);
+           // mLayout.setBackgroundColor(MoodDisplayList.get(index).getbackgroundColor());
+            mLayout.setBackgroundColor(this.getResources().getColor(MoodDisplayList.get(index).getbackgroundColor()));
+            mSmileyOfTheMood.setImageDrawable(this.getResources().getDrawable(MoodDisplayList.get(index).getsmiley()));
+        }else{
+            mSharedPreferences.edit()
+                    .putInt("moodindex", 3)
+                    .apply();
+        }
+        Log.i("index", "" + mSharedPreferences.getInt("moodindex", 0));
 
         mSharedPreferences.edit()
-                .putString("comment", m_commentary)
                 .putInt("backgroundcolor", MoodDisplayList.get(mSharedPreferences.getInt("moodindex", 3)).getbackgroundColor())
-                .putInt("moodindex", 3)
                 .putLong("timestamp", timestamp)
                 .putString("json", json)
                 .apply();
-        Log.i("index", ""+mSharedPreferences.getInt("moodindex", 0));
+        Log.i("pref" , "color : " + mSharedPreferences.getInt("backgroundcolor", MODE_PRIVATE) + "comment : " + mSharedPreferences.getString("comment", "nul"));
+
+
+        Log.i("index", "" + mSharedPreferences.getInt("moodindex", 0));
         Log.i("json", "json des shared pref" + mSharedPreferences.getString("json", ""));
+
+
+
 
 
 
@@ -135,6 +153,9 @@ public class MainActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 m_commentary = commentary.getText().toString();
+                                mSharedPreferences.edit()
+                                        .putString("comment", m_commentary)
+                                        .apply();
                             }
                         });
 
@@ -153,6 +174,41 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+        mAlarmTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // mSharedPreferences = context.getSharedPreferences("mood_of_the_day", Context.MODE_PRIVATE);
+                Gson gson = new Gson();
+                int backgroundcolor = MoodDisplayList.get(mSharedPreferences.getInt("moodindex", 3)).getbackgroundColor();
+                String comment = mSharedPreferences.getString("comment", null);
+                Mood_history newMood = new Mood_history(comment, backgroundcolor);
+
+                if (historyList.size() > 6){
+                    historyList.remove(0);
+                    historyList.add(newMood);
+                    String json = gson.toJson(historyList);
+                    mSharedPreferences.edit()
+                            .putString("json", json)
+                            .apply();
+                    resetMood(MoodDisplayList);
+
+                }else{
+
+                    historyList.add(newMood);
+                    String json = gson.toJson(historyList);
+                    mSharedPreferences.edit()
+                            .putString("json", json)
+                            .apply();
+                    resetMood(MoodDisplayList);
+
+                }
+            }
+        });
+
+
         mViewHistorybutton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -162,7 +218,30 @@ public class MainActivity extends AppCompatActivity {
            }});
 
 
+
+
     }
+
+    private void startAlarm(Calendar c) {
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent); //On réveille l'appli si elle est éteinte
+
+    }
+
+    private void resetMood(List <Mood_Display> mood_displayList){
+        mSharedPreferences.edit()
+                .putString("comment", "")
+                .putInt("moodindex", 3)
+                .apply();
+        mLayout.setBackgroundColor(getResources().getColor(mood_displayList.get(3).getbackgroundColor()));
+        mSmileyOfTheMood.setImageResource(mood_displayList.get(3).getsmiley());
+
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         mGestureDetector.onTouchEvent(event);
@@ -170,15 +249,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
 }
+

@@ -33,7 +33,7 @@ public class CustomGestureDetector implements GestureDetector.OnGestureListener,
         msmileyOfTheMood = smileyOfTheMood;
         mContext = context;
         mSharedPreferences = mContext.getSharedPreferences("mood_of_the_day", Context.MODE_PRIVATE);
-        index = mSharedPreferences.getInt("moodindex", 0);
+        Log.i("swipe", "nouvelle index dans le gesture a la création" + mSharedPreferences.getInt("moodindex", 0));
     }
     private int findResourceColor(int indexcolor) {
         int color = mContext.getResources().getColor(mmoodList.get(indexcolor).getbackgroundColor());
@@ -52,6 +52,7 @@ public class CustomGestureDetector implements GestureDetector.OnGestureListener,
 
 
             if (e1.getY() < e2.getY()) {
+                index = mSharedPreferences.getInt("moodindex", 3);
                 mlayout.setBackgroundColor(findResourceColor(index + 1));
                 msmileyOfTheMood.setImageResource(mmoodList.get(index + 1).getsmiley());
                 mcurrentNote = mMediaPlayerList.get(index + 1);
@@ -66,6 +67,7 @@ public class CustomGestureDetector implements GestureDetector.OnGestureListener,
             }
 
             if (e1.getY() > e2.getY()) {
+                index = mSharedPreferences.getInt("moodindex", 3);
                 mlayout.setBackgroundColor(findResourceColor(index - 1));
                 msmileyOfTheMood.setImageResource(mmoodList.get(index - 1).getsmiley());
                 mcurrentNote = mMediaPlayerList.get(index - 1);
