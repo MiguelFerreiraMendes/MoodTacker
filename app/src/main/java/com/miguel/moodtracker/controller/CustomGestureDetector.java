@@ -57,11 +57,13 @@ public class CustomGestureDetector implements GestureDetector.OnGestureListener,
                 msmileyOfTheMood.setImageResource(mmoodList.get(index + 1).getsmiley());
                 mcurrentNote = mMediaPlayerList.get(index + 1);
                 mcurrentNote.start();
+                index = index + 1;
                 mSharedPreferences.edit()
-                        .putInt("moodindex", index + 1)
+                        .putInt("moodindex", index)
+                        .putInt("backgroundcolor", mmoodList.get(index).getbackgroundColor())
                         .apply();
                 Log.i("swipe", "nouvelle index dans le gesture apres swipe haut " + mSharedPreferences.getInt("moodindex", 0));
-                index = index + 1;
+
 
                 return true;
             }
@@ -72,11 +74,12 @@ public class CustomGestureDetector implements GestureDetector.OnGestureListener,
                 msmileyOfTheMood.setImageResource(mmoodList.get(index - 1).getsmiley());
                 mcurrentNote = mMediaPlayerList.get(index - 1);
                 mcurrentNote.start();
+                index = index - 1;
                 mSharedPreferences.edit()
-                        .putInt("moodindex", index - 1)
+                        .putInt("moodindex", index)
+                        .putInt("backgroundcolor", mmoodList.get(index).getbackgroundColor())
                         .apply();
                 Log.i("swipe", "nouvelle index dans le gesture apres swipe bas " + mSharedPreferences.getInt("moodindex", 0));
-                index = index - 1;
 
 
                 return true;

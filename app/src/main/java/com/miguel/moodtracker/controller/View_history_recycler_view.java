@@ -49,7 +49,7 @@ public class View_history_recycler_view extends AppCompatActivity {
         Type mood_HistoryType = new TypeToken<ArrayList<Mood_history>>(){}.getType();
         //On crée le Type pour pouvoir l'utiliser dans le json et récupérer notre arraylist de Mood_History.
         ArrayList<Mood_history> moodList = gson.fromJson(json, mood_HistoryType);
-        Log.i("json", "moodList après récup   " + moodList);
+        Log.i("json", "moodList après récup " + moodList);
 
 
 
