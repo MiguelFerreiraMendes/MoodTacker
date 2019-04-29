@@ -32,11 +32,10 @@ public class View_history_recycler_view extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide(); // hide the title bar
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_view_history_recycler_view);
 
         RecyclerView mRecyclerView;
-       // List<Mood_history> mmood_list;
         MoodHistoryAdapter monadapteur;
         SharedPreferences mPrefs = getSharedPreferences("mood_of_the_day", MODE_PRIVATE);
         SharedPreferences mSharedPreferencesDisplay = this.getSharedPreferences("display size", MODE_PRIVATE);
@@ -47,7 +46,6 @@ public class View_history_recycler_view extends AppCompatActivity {
         String json = mPrefs.getString("json", "");
         Log.i("json", "Json quand on le récup dans l'activité de l'historique"+ json);
         Type mood_HistoryType = new TypeToken<ArrayList<Mood_history>>(){}.getType();
-        //On crée le Type pour pouvoir l'utiliser dans le json et récupérer notre arraylist de Mood_History.
         ArrayList<Mood_history> moodList = gson.fromJson(json, mood_HistoryType);
         Log.i("json", "moodList après récup " + moodList);
 
@@ -70,9 +68,6 @@ public class View_history_recycler_view extends AppCompatActivity {
 
 
         mRecyclerView = findViewById(R.id.recyclerView);
-
-       //int width = mLinearLayout.getWidth();
-       //int height = mLinearLayout.getHeight();
         int screenHeight = height - barheight;
 
         mSharedPreferencesDisplay.edit()
@@ -81,14 +76,6 @@ public class View_history_recycler_view extends AppCompatActivity {
                 .apply();
 
 
-     //   mmood_list = new ArrayList<>();
-     //   mmood_list.add(new Mood_history("J'ai vu un oiseau",getResources().getColor(R.color.background_happy)));
-     //   mmood_list.add(new Mood_history("J'ai manger du caca",getResources().getColor(R.color.background_sad)));
-     //   mmood_list.add(new Mood_history("Super Happy",getResources().getColor(R.color.background_superHappy)));
-     //   mmood_list.add(new Mood_history("J'ai mal au ventre",getResources().getColor(R.color.background_ehhh)));
-     //   mmood_list.add(new Mood_history("",getResources().getColor(R.color.background_ok)));
-     //   mmood_list.add(new Mood_history("J'ai trop d'erreurs dans mon code",getResources().getColor(R.color.background_sad)));
-     //   mmood_list.add(new Mood_history("J'ai manger un kebab",getResources().getColor(R.color.background_superHappy)));
 
 
         monadapteur = new MoodHistoryAdapter(moodList, this);

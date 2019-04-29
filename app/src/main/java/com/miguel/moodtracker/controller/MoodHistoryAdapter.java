@@ -68,8 +68,6 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
 class MyViewHolder extends RecyclerView.ViewHolder {
 
-    //view holder = Modeles pour nos cellules
-
     private TextView mXjours;
     private ImageButton mCommentButton;
     private ConstraintLayout mBackgroundColor;
