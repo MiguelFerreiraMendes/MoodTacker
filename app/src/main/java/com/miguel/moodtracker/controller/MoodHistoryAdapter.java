@@ -37,14 +37,16 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
         index = moodlist.size();
 
     }
-
+    //we create a layoutinflater to get our view
+    //we then create the view on our historycell_recycleview
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.historycell_recycleview, parent, false);
         return new MyViewHolder(view);
     }
-
+    //Here is the method that is called every time we create a cell
+    //we need the instance of MyViewHolder and the current position in the list
     @Override
     public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
 
@@ -59,13 +61,14 @@ class MoodHistoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     }
 
-
+    //Method to get back the size of our list
     @Override
      public int getItemCount() {
          return mmoodlist.size();
      }
 }
 
+//MyViewHolder is the model of our cell
 class MyViewHolder extends RecyclerView.ViewHolder {
 
     private TextView mXjours;
@@ -81,12 +84,14 @@ class MyViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-
+    //Method to display the color
     void displayColor(Mood_history mood_history, Context context){
         mBackgroundColor.setBackgroundColor(context.getResources().getColor(mood_history.getmbackgroundColor()));
 
     }
-
+    //Method to display the comment.
+    //if there is a comment, we put a clickListener on the mCommentbutton and display it if pressed
+    //if there is no comment, we just put the visibility of mCommentButton to invisible
     void displayCommentButton(Mood_history mood_history, final Context context){
         final String comment = mood_history.getmcomment();
         if (!comment.equals("")){
@@ -102,7 +107,9 @@ class MyViewHolder extends RecyclerView.ViewHolder {
         }
 
     }
-
+    //Method to display the width of each mood
+    //We just set the max width depending of the color of the mood
+    //For example for Sad (-2212784), we set the MaxWidth at 35%
     void displaymoodWidth(Mood_history mood_history, int width, Context context){
         int color = (context.getResources().getColor(mood_history.getmbackgroundColor()));
         Log.i("color", "couleur dans la fonction" + color);
@@ -127,11 +134,12 @@ class MyViewHolder extends RecyclerView.ViewHolder {
                 mBackgroundColor.setMaxWidth(width);
         }
     }
-
+    //Method to display the Height of the moods
     void displaymoodHeight(int x){
         mBackgroundColor.setMinHeight(x);
     }
 
+    //Method to display the correct text of our history with the help of an index
     void displayText(int index){
         switch (index)
         {

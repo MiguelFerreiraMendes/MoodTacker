@@ -52,7 +52,7 @@ public class View_history_recycler_view extends AppCompatActivity {
 
 
 
-
+        //we get the display size and the "status_bar_height"
         int ressourceID = getResources().getIdentifier("status_bar_height", "dimen", "android");
         int barheight = getResources().getDimensionPixelSize(ressourceID);
 
@@ -66,7 +66,8 @@ public class View_history_recycler_view extends AppCompatActivity {
 
 
 
-
+        //we calculate the real size by substracting the displaysize with the statusbar height
+        //we then put it in the sharedpref
         mRecyclerView = findViewById(R.id.recyclerView);
         int screenHeight = height - barheight;
 
@@ -77,9 +78,11 @@ public class View_history_recycler_view extends AppCompatActivity {
 
 
 
-
+        //We create an instance of MoodHistory Adapter with our listofmoods
+        //We then choose how we display our list, here, we display it with a LinearLayout Vertical
+        //We don't want to reverse layout so we put false to the booleans
+        //And we used the method setAdapter on our recycleview to bind our adapter to our list
         monadapteur = new MoodHistoryAdapter(moodList, this);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(monadapteur);
 

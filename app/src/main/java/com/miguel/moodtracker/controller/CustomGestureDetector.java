@@ -35,6 +35,8 @@ public class CustomGestureDetector implements GestureDetector.OnGestureListener,
         mSharedPreferences = mContext.getSharedPreferences("mood_of_the_day", Context.MODE_PRIVATE);
         Log.i("swipe", "nouvelle index dans le gesture a la création" + mSharedPreferences.getInt("moodindex", 0));
     }
+
+    //We create a method to find the indexcolor but with "getRessources"
     private int findResourceColor(int indexcolor) {
         int color = mContext.getResources().getColor(mmoodList.get(indexcolor).getbackgroundColor());
         return color;
@@ -43,13 +45,15 @@ public class CustomGestureDetector implements GestureDetector.OnGestureListener,
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        // int indexcolor = 0;
-        // int idcolor = mmoodList.get(indexcolor).getbackgroundColor();
-        // int color = getRessources().getColor(idcolor);
-        Log.i("swipe", "nouvelle index dans le gesture avant swipe" + mSharedPreferences.getInt("moodindex", 0));
 
         try {
 
+            //On swipe up
+            //We got back the "moodindex" of the sharedPref
+            //We set the backgroundColor and the Smiley with the index + 1
+            //With the index, we also get our Mediaplayer from our MediaplayerList and then play it
+            //The index + 1 is now the new index and
+            //we make sure we register the new index in the sharedPref and the new backgoundcolor
 
             if (e1.getY() < e2.getY()) {
                 index = mSharedPreferences.getInt("moodindex", 3);
@@ -84,7 +88,7 @@ public class CustomGestureDetector implements GestureDetector.OnGestureListener,
 
                 return true;
             }
-
+        //Exception to catch if we swipe out of the index
         }catch (IndexOutOfBoundsException index_out_of_bounds){
             if (index >= 4)
             {
